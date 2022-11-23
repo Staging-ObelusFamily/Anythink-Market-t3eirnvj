@@ -27,10 +27,11 @@ jobs:
       - name: Check out project
         uses: actions/checkout@v2
 
+
       - name: Use Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9"
+          python-version: "3.9.13"
     
       - uses: oNaiPs/secrets-to-env-action@v1
         with:
@@ -38,7 +39,7 @@ jobs:
 
       - name: Wilco checks
         id: Wilco
-        uses: trywilco/actions@main
+        uses: trywilco/actions@shem
         with:
           owner: ${{ github.repository_owner }}
   Lint:
