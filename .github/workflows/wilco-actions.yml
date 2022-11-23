@@ -26,6 +26,8 @@ jobs:
       - name: Wilco checks
         id: Wilco
         uses: trywilco/actions@shem
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         with:
           owner: ${{ github.repository_owner }}
   Lint:
