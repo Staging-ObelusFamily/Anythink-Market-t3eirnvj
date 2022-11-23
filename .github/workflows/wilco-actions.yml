@@ -23,6 +23,10 @@ jobs:
         with:
           mongodb-version: "4.4"
           
+      - uses: oNaiPs/secrets-to-env-action@v1
+        with:
+          secrets: ${{ toJSON(secrets) }}
+          
       - name: Wilco checks
         id: Wilco
         uses: trywilco/actions@shem
