@@ -5,6 +5,7 @@ var Comment = mongoose.model("Comment");
 var User = mongoose.model("User");
 var auth = require("../auth");
 const { sendEvent } = require("../../lib/event");
+const { createImage } = require("../../lib/openai");
 
 // Preload item objects on routes with ':item'
 router.param("item", function(req, res, next, slug) {
@@ -139,13 +140,15 @@ router.get("/feed", auth.required, function(req, res, next) {
 
 router.post("/", auth.required, function(req, res, next) {
   User.findById(req.payload.id)
-    .then(function(user) {
+    .then(async function(user) {
       if (!user) {
         return res.sendStatus(401);
       }
 
-      var item = new Item(req.body.item);
-
+      const item = new Item(req.body.item);
+      if (!item.image) {
+        item.image = await createImage(item.title);
+      }
       item.seller = user;
 
       return item.save().then(function() {
